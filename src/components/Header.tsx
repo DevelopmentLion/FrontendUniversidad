@@ -177,12 +177,6 @@ const DropdownItem = styled.a`
   }
 `;
 
-const DropdownDivider = styled.div`
-  height: 1px;
-  background: #e2e8f0;
-  margin: 0.5rem 0;
-`;
-
 const DropdownFooter = styled.div`
   padding: 1rem;
   border-top: 1px solid #e2e8f0;

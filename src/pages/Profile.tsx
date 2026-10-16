@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 const ProfileContainer = styled.div`
@@ -270,7 +269,6 @@ const ButtonSecondary = styled(Button)`
 `;
 
 const Profile: React.FC = () => {
-  const navigate = useNavigate();
   const { user, updateUser } = useAuth();
   const [formData, setFormData] = useState({
     firstName: user?.firstName || '',
