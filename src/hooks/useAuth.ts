@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL, apiEndpoints } from '../config/api';
 
 export const useAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -8,10 +9,10 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const checkAuth = () => {
-    const loggedIn = localStorage.getItem('isLoggedIn');
+    const token = localStorage.getItem('token');
     const userProfile = localStorage.getItem('userProfile');
 
-    if (loggedIn === 'true' && userProfile) {
+    if (token && userProfile) {
       setIsAuthenticated(true);
       setUser(JSON.parse(userProfile));
     } else {
@@ -32,44 +33,66 @@ export const useAuth = () => {
     return () => window.removeEventListener('auth-change', handleAuthChange);
   }, []);
 
-  const login = (email: string, _password: string) => {
-    localStorage.setItem('isLoggedIn', 'true');
-    localStorage.setItem('userEmail', email);
-    
-    const defaultUser = {
-      firstName: 'Juan',
-      lastName: 'Pérez',
-      email: email,
-      phone: '+52 55 1234 5678',
-      dateOfBirth: '2000-05-15',
-      address: 'Av. Reforma 123, Col. Centro, CDMX',
-      bio: 'Estudiante de Ingeniería en Sistemas Computacionales con interés en desarrollo web y inteligencia artificial.',
-      language: 'es',
-      timezone: 'America/Mexico_City',
-      courses: 7,
-      average: 8.5,
-      joinedDate: 'Enero 2024'
-    };
+  const login = async (email: string, password: string) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}${apiEndpoints.auth.login}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    localStorage.setItem('userProfile', JSON.stringify(defaultUser));
-    setUser(defaultUser);
-    setIsAuthenticated(true);
-    window.dispatchEvent(new Event('auth-change'));
-    navigate('/dashboard');
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Login failed');
+      }
+
+      const data = await response.json();
+      
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('userProfile', JSON.stringify(data.user));
+      setUser(data.user);
+      setIsAuthenticated(true);
+      window.dispatchEvent(new Event('auth-change'));
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('userEmail');
+    localStorage.removeItem('token');
     localStorage.removeItem('userProfile');
     setIsAuthenticated(false);
     setUser(null);
     navigate('/login');
   };
 
-  const updateUser = (userData: any) => {
-    localStorage.setItem('userProfile', JSON.stringify(userData));
-    setUser(userData);
+  const updateUser = async (userData: any) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_BASE_URL}${apiEndpoints.users.profile}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update profile');
+      }
+
+      const updatedUser = await response.json();
+      localStorage.setItem('userProfile', JSON.stringify(updatedUser));
+      setUser(updatedUser);
+    } catch (error) {
+      console.error('Update profile error:', error);
+      throw error;
+    }
   };
 
   return { isAuthenticated, user, login, logout, updateUser, loading };

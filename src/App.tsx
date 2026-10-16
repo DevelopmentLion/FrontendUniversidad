@@ -12,6 +12,7 @@ import Calendario from './pages/Calendario';
 import Calificaciones from './pages/Calificaciones';
 import Foros from './pages/Foros';
 import Programas from './pages/Programas';
+import CreateGoogleCourse from './components/CreateGoogleCourse';
 
 function App() {
   const { isAuthenticated, user, loading } = useAuth();
@@ -31,6 +32,7 @@ function App() {
     { path: '/programas', label: 'Programas' },
     { path: '/foros', label: 'Foros' },
     { path: '/calificaciones', label: 'Calificaciones' },
+    { path: '/google-classroom', label: 'Google Classroom' },
   ];
 
   const defaultUser = {
@@ -63,6 +65,7 @@ function App() {
                   <Route path="/foros" element={<Foros />} />
                   <Route path="/calificaciones" element={<Calificaciones />} />
                   <Route path="/profile" element={<Profile />} />
+                  <Route path="/google-classroom" element={<CreateGoogleCourse />} />
                 </Routes>
               </Layout>
             ) : (

@@ -4,7 +4,7 @@ Plataforma de aprendizaje universitario implementada con React, TypeScript y Sty
 
 ## 🚀 Características
 
-- **Autenticación**: Sistema de login con localStorage
+- **Autenticación**: Sistema de login con backend API (JWT)
 - **Dashboard**: Vista general del progreso académico
 - **Aulas Virtuales**: Acceso a cursos y materias
 - **Sesiones en Vivo**: Clases, tutorías y exámenes en tiempo real
@@ -13,6 +13,7 @@ Plataforma de aprendizaje universitario implementada con React, TypeScript y Sty
 - **Foros**: Discusiones académicas
 - **Programas**: Seguimiento de programas de estudio
 - **Perfil**: Gestión de información personal
+- **Google Classroom**: Integración para crear cursos en Google Classroom
 
 ## 📦 Instalación
 
@@ -23,11 +24,13 @@ npm install
 
 ## 🛠️ Tecnologías
 
-- **React 18** - Framework de UI
+- **React 19** - Framework de UI
 - **TypeScript** - Tipado estático
 - **Vite** - Build tool
 - **Styled Components** - CSS-in-JS
 - **React Router** - Enrutamiento
+- **Backend API** - Cloudflare Workers (Hono + TypeScript)
+- **Google Classroom API** - Integración OAuth 2.0
 
 ## 🏃 Ejecutar el proyecto
 
@@ -66,9 +69,22 @@ src/
 
 ## 🔐 Credenciales de Login
 
-Para propósitos de demostración, cualquier email y contraseña funcionan:
-- Email: `usuario@ejemplo.com`
-- Contraseña: `cualquier contraseña`
+El frontend se conecta a un backend real. Credenciales de prueba:
+- Email: `juan.perez@universidad.edu`
+- Contraseña: `password123`
+
+## 🔗 Backend API
+
+El frontend se conecta al backend desplegado en Cloudflare Workers:
+- URL: `https://universidad-backend.developmentec.workers.dev`
+- Documentación: [Backend README](../universidad-backend/BackendUniversidad/README.md)
+
+### Endpoints disponibles:
+- `POST /api/auth/login` - Iniciar sesión
+- `GET /api/users/profile` - Obtener perfil
+- `GET /api/courses` - Obtener cursos
+- `POST /api/classroom/courses` - Crear curso en Google Classroom
+- Ver documentación completa del backend para más endpoints
 
 ## 🎨 Estilos
 
@@ -107,7 +123,8 @@ npm run build
 
 ## 📝 Notas
 
-- Este es un proyecto frontend sin backend real
-- Los datos se almacenan en localStorage
-- No hay persistencia de datos entre sesiones del navegador
-- Para producción, se requiere un backend real
+- El frontend se conecta a un backend real en Cloudflare Workers
+- La autenticación usa JWT tokens almacenados en localStorage
+- La integración con Google Classroom requiere autenticación OAuth 2.0
+- Los datos de usuario se obtienen del backend API
+- Para producción, asegúrate de configurar la URL correcta del backend en `src/config/api.ts`
