@@ -137,6 +137,30 @@ const CourseMeta = styled.div`
   color: #64748b;
 `;
 
+const CourseStats = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+`;
+
+const CourseStat = styled.div`
+  flex: 1;
+  text-align: center;
+`;
+
+const CourseStatValue = styled.div`
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+`;
+
+const CourseStatLabel = styled.div`
+  font-size: 0.75rem;
+  color: #64748b;
+`;
+
 const PendingGrades = styled.div`
   background: white;
   padding: 2rem;
@@ -178,6 +202,14 @@ const GradeCourse = styled.div`
   color: #64748b;
 `;
 
+const GradeMeta = styled.div`
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-top: 0.25rem;
+`;
+
 const GradeAction = styled.button`
   background: #0f172a;
   color: white;
@@ -198,6 +230,7 @@ const UpcomingClasses = styled.div`
   border-radius: 12px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   border: 2px solid #000;
+  margin-bottom: 2rem;
 `;
 
 const ClassItem = styled.div`
@@ -254,30 +287,198 @@ const ClassStudents = styled.span`
   color: white;
 `;
 
+const RecentActivity = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 2px solid #000;
+`;
+
+const ActivityItem = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  border: 1px solid #e2e8f0;
+`;
+
+const ActivityIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  background: #0f172a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  flex-shrink: 0;
+`;
+
+const ActivityContent = styled.div`
+  flex: 1;
+`;
+
+const ActivityTitle = styled.div`
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.25rem;
+`;
+
+const ActivityTime = styled.div`
+  font-size: 0.8rem;
+  color: #64748b;
+`;
+
+const ActionButton = styled.button`
+  background: #0f172a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #1e293b;
+  }
+`;
+
 const TeacherDashboard: React.FC = () => {
   const courses = [
-    { id: 1, title: 'Programación Avanzada', code: 'ING-204', students: 35, schedule: 'Lun/Mie 14:00-16:00' },
-    { id: 2, title: 'Bases de Datos', code: 'ING-301', students: 42, schedule: 'Mar/Jue 10:00-12:00' },
-    { id: 3, title: 'Estructuras de Datos', code: 'ING-205', students: 38, schedule: 'Vie 09:00-11:00' },
+    {
+      id: 1,
+      title: 'Programación Avanzada',
+      code: 'ING-204',
+      students: 35,
+      schedule: 'Lun/Mie 14:00-16:00',
+      graded: 28,
+      pending: 7,
+      average: 8.5,
+    },
+    {
+      id: 2,
+      title: 'Bases de Datos',
+      code: 'ING-301',
+      students: 42,
+      schedule: 'Mar/Jue 10:00-12:00',
+      graded: 35,
+      pending: 7,
+      average: 8.7,
+    },
+    {
+      id: 3,
+      title: 'Estructuras de Datos',
+      code: 'ING-205',
+      students: 38,
+      schedule: 'Vie 09:00-11:00',
+      graded: 32,
+      pending: 6,
+      average: 8.3,
+    },
   ];
 
   const pendingGrades = [
-    { id: 1, student: 'María González', course: 'Programación Avanzada', assignment: 'Proyecto Final' },
-    { id: 2, student: 'Carlos Rodríguez', course: 'Bases de Datos', assignment: 'Examen Parcial' },
-    { id: 3, student: 'Ana Martínez', course: 'Programación Avanzada', assignment: 'Tarea 5' },
-    { id: 4, student: 'Pedro Sánchez', course: 'Estructuras de Datos', assignment: 'Laboratorio 3' },
+    {
+      id: 1,
+      student: 'María González',
+      course: 'Programación Avanzada',
+      assignment: 'Proyecto Final',
+      submitted: ' hace 2 días',
+      deadline: '2024-10-15',
+    },
+    {
+      id: 2,
+      student: 'Carlos Rodríguez',
+      course: 'Bases de Datos',
+      assignment: 'Examen Parcial',
+      submitted: ' hace 1 día',
+      deadline: '2024-10-14',
+    },
+    {
+      id: 3,
+      student: 'Ana Martínez',
+      course: 'Programación Avanzada',
+      assignment: 'Tarea 5',
+      submitted: ' hace 3 horas',
+      deadline: '2024-10-18',
+    },
+    {
+      id: 4,
+      student: 'Pedro Sánchez',
+      course: 'Estructuras de Datos',
+      assignment: 'Laboratorio 3',
+      submitted: ' hace 5 horas',
+      deadline: '2024-10-17',
+    },
   ];
 
   const upcomingClasses = [
-    { day: 18, month: 'OCT', title: 'Programación Avanzada - Sesión 12', time: '14:00 - 16:00 hrs', students: 35 },
-    { day: 19, month: 'OCT', title: 'Bases de Datos - Sesión 11', time: '10:00 - 12:00 hrs', students: 42 },
-    { day: 20, month: 'OCT', title: 'Estructuras de Datos - Sesión 8', time: '09:00 - 11:00 hrs', students: 38 },
+    {
+      day: 18,
+      month: 'OCT',
+      title: 'Programación Avanzada - Sesión 12',
+      time: '14:00 - 16:00 hrs',
+      students: 35,
+      topic: 'Recursividad y Backtracking',
+    },
+    {
+      day: 19,
+      month: 'OCT',
+      title: 'Bases de Datos - Sesión 11',
+      time: '10:00 - 12:00 hrs',
+      students: 42,
+      topic: 'Optimización de Consultas',
+    },
+    {
+      day: 20,
+      month: 'OCT',
+      title: 'Estructuras de Datos - Sesión 8',
+      time: '09:00 - 11:00 hrs',
+      students: 38,
+      topic: 'Árboles AVL',
+    },
+  ];
+
+  const recentActivity = [
+    {
+      id: 1,
+      icon: '📝',
+      title: 'María González entregó el Proyecto Final',
+      course: 'Programación Avanzada',
+      time: 'hace 2 horas',
+    },
+    {
+      id: 2,
+      icon: '💬',
+      title: 'Nueva pregunta en el foro de Bases de Datos',
+      course: 'Bases de Datos',
+      time: 'hace 4 horas',
+    },
+    {
+      id: 3,
+      icon: '📚',
+      title: 'Carlos Rodríguez calificó 5 tareas',
+      course: 'Estructuras de Datos',
+      time: 'hace 6 horas',
+    },
+    {
+      id: 4,
+      icon: '🎥',
+      title: 'Sesión grabada disponible: Programación Avanzada',
+      course: 'Programación Avanzada',
+      time: 'ayer',
+    },
   ];
 
   return (
     <>
       <WelcomeSection>
-        <WelcomeTitle>Bienvenido, Profesor</WelcomeTitle>
+        <WelcomeTitle>Bienvenido, Profesora María</WelcomeTitle>
         <WelcomeSubtitle>Gestiona tus cursos, estudiantes y calificaciones</WelcomeSubtitle>
       </WelcomeSection>
 
@@ -316,9 +517,24 @@ const TeacherDashboard: React.FC = () => {
                 <span>{course.code}</span>
                 <span>{course.schedule}</span>
               </CourseMeta>
-              <CourseMeta>
-                <span>Estudiantes: {course.students}</span>
-              </CourseMeta>
+              <CourseStats>
+                <CourseStat>
+                  <CourseStatValue>{course.students}</CourseStatValue>
+                  <CourseStatLabel>Estudiantes</CourseStatLabel>
+                </CourseStat>
+                <CourseStat>
+                  <CourseStatValue>{course.graded}</CourseStatValue>
+                  <CourseStatLabel>Calificados</CourseStatLabel>
+                </CourseStat>
+                <CourseStat>
+                  <CourseStatValue>{course.pending}</CourseStatValue>
+                  <CourseStatLabel>Pendientes</CourseStatLabel>
+                </CourseStat>
+                <CourseStat>
+                  <CourseStatValue>{course.average}</CourseStatValue>
+                  <CourseStatLabel>Promedio</CourseStatLabel>
+                </CourseStat>
+              </CourseStats>
             </CourseBody>
           </CourseCard>
         ))}
@@ -331,6 +547,10 @@ const TeacherDashboard: React.FC = () => {
             <GradeInfo>
               <GradeStudent>{grade.student}</GradeStudent>
               <GradeCourse>{grade.course} - {grade.assignment}</GradeCourse>
+              <GradeMeta>
+                <span>Entregado: {grade.submitted}</span>
+                <span>Fecha límite: {grade.deadline}</span>
+              </GradeMeta>
             </GradeInfo>
             <GradeAction>Calificar</GradeAction>
           </GradeItem>
@@ -347,12 +567,26 @@ const TeacherDashboard: React.FC = () => {
             </ClassDate>
             <ClassInfo>
               <ClassInfoTitle>{classItem.title}</ClassInfoTitle>
-              <ClassInfoTime>{classItem.time}</ClassInfoTime>
+              <ClassInfoTime>{classItem.time} - {classItem.topic}</ClassInfoTime>
             </ClassInfo>
             <ClassStudents>{classItem.students} estudiantes</ClassStudents>
           </ClassItem>
         ))}
       </UpcomingClasses>
+
+      <SectionTitle>Actividad Reciente</SectionTitle>
+      <RecentActivity>
+        {recentActivity.map((activity) => (
+          <ActivityItem key={activity.id}>
+            <ActivityIcon>{activity.icon}</ActivityIcon>
+            <ActivityContent>
+              <ActivityTitle>{activity.title}</ActivityTitle>
+              <ActivityTime>{activity.course} • {activity.time}</ActivityTime>
+            </ActivityContent>
+            <ActionButton>Ver</ActionButton>
+          </ActivityItem>
+        ))}
+      </RecentActivity>
     </>
   );
 };

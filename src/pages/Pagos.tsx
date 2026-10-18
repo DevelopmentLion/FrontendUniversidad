@@ -71,7 +71,7 @@ const TableHeader = styled.div`
   color: white;
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 1rem;
   font-weight: 600;
 `;
@@ -79,7 +79,7 @@ const TableHeader = styled.div`
 const TableRow = styled.div`
   padding: 1.5rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 1rem;
   border-bottom: 1px solid #e2e8f0;
   align-items: center;
@@ -161,6 +161,89 @@ const AddButton = styled.button`
   font-size: 0.9rem;
   font-weight: 500;
   margin-top: 1.5rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #1e293b;
+  }
+`;
+
+const DownloadButton = styled.button`
+  background: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &:hover {
+    background: #1d4ed8;
+  }
+`;
+
+const ActionsCell = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const DownloadSection = styled.div`
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 2px solid #000;
+  margin-bottom: 2rem;
+`;
+
+const DownloadGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+`;
+
+const DownloadCard = styled.div`
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+  }
+`;
+
+const DownloadIcon = styled.div`
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+`;
+
+const DownloadTitle = styled.h3`
+  color: #0f172a;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+`;
+
+const DownloadDescription = styled.p`
+  color: #64748b;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+`;
+
+const DownloadAction = styled.button`
+  background: #0f172a;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
   transition: all 0.2s;
 
   &:hover {
@@ -318,6 +401,7 @@ const Pagos: React.FC = () => {
           <div>Fecha de Pago</div>
           <div>Fecha Límite</div>
           <div>Estado</div>
+          <div>Acciones</div>
         </TableHeader>
         {payments.map((payment) => (
           <TableRow key={payment.id}>
@@ -331,9 +415,51 @@ const Pagos: React.FC = () => {
             <StatusBadge status={payment.status}>
               {payment.status === 'paid' ? 'Pagado' : payment.status === 'pending' ? 'Pendiente' : 'Vencido'}
             </StatusBadge>
+            <ActionsCell>
+              {payment.status === 'paid' && (
+                <DownloadButton onClick={() => {}}>
+                  📄 Recibo
+                </DownloadButton>
+              )}
+              {payment.status === 'pending' && (
+                <DownloadButton onClick={() => {}}>
+                  📄 Formato
+                </DownloadButton>
+              )}
+            </ActionsCell>
           </TableRow>
         ))}
       </PaymentHistory>
+
+      <SectionTitle>Formatos de Pago</SectionTitle>
+      <DownloadSection>
+        <DownloadGrid>
+          <DownloadCard>
+            <DownloadIcon>📄</DownloadIcon>
+            <DownloadTitle>Formato de Pago Mensual</DownloadTitle>
+            <DownloadDescription>Formato oficial para realizar pagos de colegiatura</DownloadDescription>
+            <DownloadAction>Descargar PDF</DownloadAction>
+          </DownloadCard>
+          <DownloadCard>
+            <DownloadIcon>📋</DownloadIcon>
+            <DownloadTitle>Formato de Referencia Bancaria</DownloadTitle>
+            <DownloadDescription>Datos bancarios para transferencias SPEI</DownloadDescription>
+            <DownloadAction>Descargar PDF</DownloadAction>
+          </DownloadCard>
+          <DownloadCard>
+            <DownloadIcon>🧾</DownloadIcon>
+            <DownloadTitle>Historial de Pagos</DownloadTitle>
+            <DownloadDescription>Reporte completo de todos tus pagos realizados</DownloadDescription>
+            <DownloadAction>Descargar PDF</DownloadAction>
+          </DownloadCard>
+          <DownloadCard>
+            <DownloadIcon>📊</DownloadIcon>
+            <DownloadTitle>Estado de Cuenta</DownloadTitle>
+            <DownloadDescription>Resumen detallado de tu estado de cuenta actual</DownloadDescription>
+            <DownloadAction>Descargar PDF</DownloadAction>
+          </DownloadCard>
+        </DownloadGrid>
+      </DownloadSection>
 
       <SectionTitle>Métodos de Pago</SectionTitle>
       <PaymentMethods>

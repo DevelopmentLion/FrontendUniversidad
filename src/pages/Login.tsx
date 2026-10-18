@@ -196,59 +196,6 @@ const SignupLinkA = styled.a`
   }
 `;
 
-const DemoCredentials = styled.div`
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 1rem;
-  margin-top: 1.5rem;
-`;
-
-const DemoTitle = styled.div`
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 0.75rem;
-  text-align: center;
-`;
-
-const DemoUser = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  background: white;
-  border-radius: 6px;
-  border: 1px solid #e2e8f0;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    border-color: #3b82f6;
-    background: #f1f5f9;
-  }
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-const DemoUserInfo = styled.div`
-  font-size: 0.85rem;
-  color: #475569;
-`;
-
-const DemoUserBadge = styled.span<{ role: string }>`
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  background: ${props => props.role === 'teacher' ? '#10b981' : '#3b82f6'};
-  color: white;
-  margin-left: 0.5rem;
-`;
-
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -257,11 +204,6 @@ const Login: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login(email, password);
-  };
-
-  const handleDemoLogin = (demoEmail: string, demoPassword: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPassword);
   };
 
   return (
@@ -323,24 +265,6 @@ const Login: React.FC = () => {
         <SignupLink>
           ¿No tienes una cuenta? <SignupLinkA>Regístrate</SignupLinkA>
         </SignupLink>
-
-        <DemoCredentials>
-          <DemoTitle>Cuentas de Demo</DemoTitle>
-          <DemoUser onClick={() => handleDemoLogin('estudiante@demo.com', 'demo123')}>
-            <DemoUserInfo>
-              estudiante@demo.com
-              <DemoUserBadge role="student">Estudiante</DemoUserBadge>
-            </DemoUserInfo>
-            <DemoUserInfo>demo123</DemoUserInfo>
-          </DemoUser>
-          <DemoUser onClick={() => handleDemoLogin('docente@demo.com', 'demo123')}>
-            <DemoUserInfo>
-              docente@demo.com
-              <DemoUserBadge role="teacher">Docente</DemoUserBadge>
-            </DemoUserInfo>
-            <DemoUserInfo>demo123</DemoUserInfo>
-          </DemoUser>
-        </DemoCredentials>
       </LoginCard>
     </LoginContainer>
   );
