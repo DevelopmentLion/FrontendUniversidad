@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import CalendarEventForm from '../components/CalendarEventForm';
 
 const PageHeader = styled.div`
   background: white;
@@ -238,6 +239,7 @@ const Calendario: React.FC = () => {
   const { user } = useAuth();
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isTeacher = user?.role === 'teacher';
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
@@ -328,7 +330,7 @@ const Calendario: React.FC = () => {
         </div>
         {isTeacher && (
           <HeaderActions>
-            <AddButton>+ Agregar Evento</AddButton>
+            <AddButton onClick={() => setIsModalOpen(true)}>+ Agregar Evento</AddButton>
           </HeaderActions>
         )}
       </PageHeader>
@@ -368,6 +370,8 @@ const Calendario: React.FC = () => {
           ))}
         </UpcomingList>
       </UpcomingSection>
+
+      <CalendarEventForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

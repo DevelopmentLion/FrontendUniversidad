@@ -37,6 +37,23 @@ export const LOCAL_USERS = {
     average: 0,
     joinedDate: '2020-01-10',
   },
+  admin: {
+    id: 'local-admin-1',
+    firstName: 'Roberto',
+    lastName: 'Admin',
+    email: 'admin@demo.com',
+    password: 'demo123',
+    role: 'admin',
+    phone: '+52 55 0000 0000',
+    dateOfBirth: '1980-01-01',
+    address: 'Ciudad de México',
+    bio: 'Administrador del Sistema',
+    language: 'es',
+    timezone: 'America/Mexico_City',
+    courses: 0,
+    average: 0,
+    joinedDate: '2019-01-01',
+  },
 };
 
 export const useAuth = () => {
@@ -93,7 +110,9 @@ export const useAuth = () => {
         setIsAuthenticated(true);
         window.dispatchEvent(new Event('auth-change'));
 
-        if (localUser.role === 'teacher') {
+        if (localUser.role === 'admin') {
+          navigate('/admin-dashboard');
+        } else if (localUser.role === 'teacher') {
           navigate('/teacher-dashboard');
         } else {
           navigate('/dashboard');

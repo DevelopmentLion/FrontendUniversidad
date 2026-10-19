@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import ClassroomForm from '../components/ClassroomForm';
 
 const PageHeader = styled.div`
   background: white;
@@ -222,6 +224,7 @@ const ClassroomAction = styled.div`
 
 const Aulas: React.FC = () => {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isTeacher = user?.role === 'teacher';
 
   const classrooms = [
@@ -332,7 +335,7 @@ const Aulas: React.FC = () => {
         </div>
         {isTeacher && (
           <HeaderActions>
-            <AddButton>+ Crear Aula Virtual</AddButton>
+            <AddButton onClick={() => setIsModalOpen(true)}>+ Crear Aula Virtual</AddButton>
           </HeaderActions>
         )}
       </PageHeader>
@@ -388,6 +391,8 @@ const Aulas: React.FC = () => {
           </ClassroomCard>
         ))}
       </ClassroomsGrid>
+
+      <ClassroomForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

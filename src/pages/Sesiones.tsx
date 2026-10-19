@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import SessionForm from '../components/SessionForm';
 
 const PageHeader = styled.div`
   background: white;
@@ -174,6 +176,7 @@ const RecordingBadge = styled.span`
 
 const Sesiones: React.FC = () => {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isTeacher = user?.role === 'teacher';
 
   const sessions = [
@@ -238,7 +241,7 @@ const Sesiones: React.FC = () => {
         </div>
         {isTeacher && (
           <HeaderActions>
-            <AddButton>+ Crear Sesión</AddButton>
+            <AddButton onClick={() => setIsModalOpen(true)}>+ Crear Sesión</AddButton>
           </HeaderActions>
         )}
       </PageHeader>
@@ -273,6 +276,8 @@ const Sesiones: React.FC = () => {
           </SessionCard>
         ))}
       </SessionsGrid>
+
+      <SessionForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };

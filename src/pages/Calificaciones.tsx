@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import GradeForm from '../components/GradeForm';
 
 const PageHeader = styled.div`
   background: white;
@@ -140,6 +142,7 @@ const GradeBadge = styled.span<{ grade: string }>`
 
 const Calificaciones: React.FC = () => {
   const { user } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isTeacher = user?.role === 'teacher';
 
   const grades = [
@@ -218,7 +221,7 @@ const Calificaciones: React.FC = () => {
         </div>
         {isTeacher && (
           <HeaderActions>
-            <AddButton>+ Registrar Calificación</AddButton>
+            <AddButton onClick={() => setIsModalOpen(true)}>+ Registrar Calificación</AddButton>
           </HeaderActions>
         )}
       </PageHeader>
@@ -265,6 +268,8 @@ const Calificaciones: React.FC = () => {
           </TableRow>
         ))}
       </GradesTable>
+
+      <GradeForm isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </>
   );
 };
