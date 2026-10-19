@@ -5,6 +5,8 @@ import Layout from './components/Layout';
 import Login from './pages/Login';
 import Index from './pages/Index';
 import Dashboard from './pages/Dashboard';
+import TeacherDashboard from './pages/TeacherDashboard';
+import AdminDashboard from './pages/AdminDashboard';
 import Aulas from './pages/Aulas';
 import Profile from './pages/Profile';
 import Sesiones from './pages/Sesiones';
@@ -12,6 +14,7 @@ import Calendario from './pages/Calendario';
 import Calificaciones from './pages/Calificaciones';
 import Foros from './pages/Foros';
 import Programas from './pages/Programas';
+import Pagos from './pages/Pagos';
 import CreateGoogleCourse from './components/CreateGoogleCourse';
 
 function App() {
@@ -23,7 +26,9 @@ function App() {
     </div>;
   }
 
-  const sidebarItems = [
+  const userRole = user?.role || 'student';
+
+  const studentSidebarItems = [
     { path: '/', label: 'Inicio' },
     { path: '/dashboard', label: 'Dashboard' },
     { path: '/aulas', label: 'Aulas Virtuales' },
@@ -32,8 +37,33 @@ function App() {
     { path: '/programas', label: 'Programas' },
     { path: '/foros', label: 'Foros' },
     { path: '/calificaciones', label: 'Calificaciones' },
+    { path: '/pagos', label: 'Pagos' },
+  ];
+
+  const teacherSidebarItems = [
+    { path: '/', label: 'Inicio' },
+    { path: '/teacher-dashboard', label: 'Dashboard Docente' },
+    { path: '/aulas', label: 'Aulas Virtuales' },
+    { path: '/sesiones', label: 'Sesiones' },
+    { path: '/calendario', label: 'Calendario' },
+    { path: '/calificaciones', label: 'Calificaciones' },
+    { path: '/foros', label: 'Foros' },
     { path: '/google-classroom', label: 'Google Classroom' },
   ];
+
+  const adminSidebarItems = [
+    { path: '/', label: 'Inicio' },
+    { path: '/admin-dashboard', label: 'Panel Admin' },
+    { path: '/aulas', label: 'Aulas Virtuales' },
+    { path: '/sesiones', label: 'Sesiones' },
+    { path: '/calendario', label: 'Calendario' },
+    { path: '/calificaciones', label: 'Calificaciones' },
+    { path: '/foros', label: 'Foros' },
+    { path: '/programas', label: 'Programas' },
+    { path: '/pagos', label: 'Pagos' },
+  ];
+
+  const sidebarItems = userRole === 'admin' ? adminSidebarItems : userRole === 'teacher' ? teacherSidebarItems : studentSidebarItems;
 
   const defaultUser = {
     firstName: 'Juan',
@@ -58,12 +88,15 @@ function App() {
                 <Routes>
                   <Route path="/" element={<Index />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
+                  <Route path="/admin-dashboard" element={<AdminDashboard />} />
                   <Route path="/aulas" element={<Aulas />} />
                   <Route path="/sesiones" element={<Sesiones />} />
                   <Route path="/calendario" element={<Calendario />} />
                   <Route path="/programas" element={<Programas />} />
                   <Route path="/foros" element={<Foros />} />
                   <Route path="/calificaciones" element={<Calificaciones />} />
+                  <Route path="/pagos" element={<Pagos />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/google-classroom" element={<CreateGoogleCourse />} />
                 </Routes>
