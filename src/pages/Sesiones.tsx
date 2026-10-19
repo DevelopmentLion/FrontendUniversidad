@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAuth } from '../hooks/useAuth';
 
 const PageHeader = styled.div`
   background: white;
@@ -7,6 +8,9 @@ const PageHeader = styled.div`
   margin-bottom: 2rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   border: 2px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const PageTitle = styled.h1`
@@ -20,6 +24,25 @@ const PageTitle = styled.h1`
 const PageSubtitle = styled.p`
   color: #64748b;
   font-size: 0.95rem;
+`;
+
+const HeaderActions = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const AddButton = styled.button`
+  background: #0f172a;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #1e293b;
+  }
 `;
 
 const SessionsGrid = styled.div`
@@ -150,6 +173,8 @@ const RecordingBadge = styled.span`
 `;
 
 const Sesiones: React.FC = () => {
+  const { user } = useAuth();
+  const isTeacher = user?.role === 'teacher';
 
   const sessions = [
     {
@@ -207,8 +232,15 @@ const Sesiones: React.FC = () => {
   return (
     <>
       <PageHeader>
-        <PageTitle>Sesiones en Vivo</PageTitle>
-        <PageSubtitle>Asiste a tus clases, tutorías y exámenes en tiempo real</PageSubtitle>
+        <div>
+          <PageTitle>Sesiones en Vivo</PageTitle>
+          <PageSubtitle>Asiste a tus clases, tutorías y exámenes en tiempo real</PageSubtitle>
+        </div>
+        {isTeacher && (
+          <HeaderActions>
+            <AddButton>+ Crear Sesión</AddButton>
+          </HeaderActions>
+        )}
       </PageHeader>
 
       <SessionsGrid>

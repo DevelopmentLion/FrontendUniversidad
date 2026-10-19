@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL, apiEndpoints } from '../config/api';
 
-const LOCAL_USERS = {
+export const LOCAL_USERS = {
   student: {
     id: 'local-student-1',
     firstName: 'Juan',
@@ -50,8 +50,17 @@ export const useAuth = () => {
     const userProfile = localStorage.getItem('userProfile');
 
     if (token && userProfile) {
-      setIsAuthenticated(true);
-      setUser(JSON.parse(userProfile));
+      const parsedUser = JSON.parse(userProfile);
+
+      if (!parsedUser.role) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userProfile');
+        setIsAuthenticated(false);
+        setUser(null);
+      } else {
+        setIsAuthenticated(true);
+        setUser(parsedUser);
+      }
     } else {
       setIsAuthenticated(false);
       setUser(null);
