@@ -28,6 +28,14 @@ function App() {
 
   const userRole = user?.role || 'student';
 
+  console.log('=== DEBUG APP ===');
+  console.log('Usuario completo:', user);
+  console.log('Rol del usuario:', user?.role);
+  console.log('Email del usuario:', user?.email);
+  console.log('Rol asignado final:', userRole);
+  console.log('Sidebar items:', userRole === 'admin' ? 'admin' : userRole === 'teacher' ? 'teacher' : 'student');
+  console.log('==================');
+
   const studentSidebarItems = [
     { path: '/', label: 'Inicio' },
     { path: '/dashboard', label: 'Dashboard' },

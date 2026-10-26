@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useAuth } from '../hooks/useAuth';
 
 const PageHeader = styled.div`
   background: white;
@@ -181,7 +182,10 @@ const CompletionLabel = styled.div`
 `;
 
 const Programas: React.FC = () => {
-  const programs = [
+  const { user } = useAuth();
+  const isAdmin = user?.role === 'admin';
+
+  const allPrograms = [
     {
       id: 1,
       title: 'Ingeniería en Sistemas Computacionales',
@@ -216,6 +220,8 @@ const Programas: React.FC = () => {
       currentSemester: 'Semestre 2',
     },
   ];
+
+  const programs = isAdmin ? allPrograms : allPrograms.filter(p => p.id === 1);
 
   return (
     <>

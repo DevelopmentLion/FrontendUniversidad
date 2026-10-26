@@ -374,25 +374,6 @@ const Pagos: React.FC = () => {
         </AlertBanner>
       )}
 
-      <StatsContainer>
-        <StatCard>
-          <StatNumber>${stats.totalPaid.toLocaleString()}</StatNumber>
-          <StatLabel>Total Pagado</StatLabel>
-        </StatCard>
-        <StatCard>
-          <StatNumber color={stats.pending > 0 ? '#f59e0b' : '#10b981'}>${stats.pending.toLocaleString()}</StatNumber>
-          <StatLabel>Pendiente</StatLabel>
-        </StatCard>
-        <StatCard>
-          <StatNumber color={stats.overdue > 0 ? '#ef4444' : '#10b981'}>${stats.overdue.toLocaleString()}</StatNumber>
-          <StatLabel>Vencido</StatLabel>
-        </StatCard>
-        <StatCard>
-          <StatNumber>${stats.nextPayment.toLocaleString()}</StatNumber>
-          <StatLabel>Próximo Pago</StatLabel>
-        </StatCard>
-      </StatsContainer>
-
       <SectionTitle>Historial de Pagos</SectionTitle>
       <PaymentHistory>
         <TableHeader>
@@ -444,18 +425,6 @@ const Pagos: React.FC = () => {
             <DownloadIcon>📋</DownloadIcon>
             <DownloadTitle>Formato de Referencia Bancaria</DownloadTitle>
             <DownloadDescription>Datos bancarios para transferencias SPEI</DownloadDescription>
-            <DownloadAction>Descargar PDF</DownloadAction>
-          </DownloadCard>
-          <DownloadCard>
-            <DownloadIcon>🧾</DownloadIcon>
-            <DownloadTitle>Historial de Pagos</DownloadTitle>
-            <DownloadDescription>Reporte completo de todos tus pagos realizados</DownloadDescription>
-            <DownloadAction>Descargar PDF</DownloadAction>
-          </DownloadCard>
-          <DownloadCard>
-            <DownloadIcon>📊</DownloadIcon>
-            <DownloadTitle>Estado de Cuenta</DownloadTitle>
-            <DownloadDescription>Resumen detallado de tu estado de cuenta actual</DownloadDescription>
             <DownloadAction>Descargar PDF</DownloadAction>
           </DownloadCard>
         </DownloadGrid>
